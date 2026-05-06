@@ -219,7 +219,12 @@ body::after {
   font-weight: 900;
   font-size: 24px;
   letter-spacing: 0.05em;
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.15s;
 }
+.brand:hover { opacity: 0.65; }
+.brand:active { opacity: 0.4; }
 .brand .small {
   font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
   font-size: 11px;
@@ -638,10 +643,30 @@ body::after {
   display: inline-block;
   background: var(--charcoal);
   color: var(--cream);
-  padding: 4px 8px;
+  padding: 8px 14px;
   margin: 4px 2px;
   font-weight: 700;
-  border-radius: 2px;
+  border-radius: 4px;
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 13px;
+  user-select: none;
+}
+/* 탭 가능 = 클릭/터치 핸들러 박힌 키 */
+.controls-hint .key.tap {
+  cursor: pointer;
+  transition: all 0.12s;
+  border: 2px solid var(--olive);
+  box-shadow: 0 2px 0 var(--olive-deep);
+  position: relative;
+  top: 0;
+}
+.controls-hint .key.tap:hover {
+  background: var(--olive);
+  color: var(--charcoal);
+}
+.controls-hint .key.tap:active {
+  top: 2px;
+  box-shadow: 0 0 0 var(--olive-deep);
 }
 .controls-hint .lbl {
   display: block;
@@ -1884,9 +1909,9 @@ body::after {
 <!-- ============================================ -->
 <div class="screen" id="main">
   <div class="top-bar">
-    <div class="brand">
+    <div class="brand" onclick="showScreen('intro')" title="처음 화면으로">
       B-SIDE RECORDS
-      <span class="small">★ THE OTHER SIDE OF SOUND ★</span>
+      <span class="small">★ THE OTHER SIDE OF SOUND ★ TAP = HOME ★</span>
     </div>
     <div class="top-meta">
       ULTRA DEPARTMENT STORE BUSAN<br>
@@ -1939,11 +1964,11 @@ body::after {
   </div>
 
   <div class="controls-hint">
-    <div><span class="key">←</span> <span class="key">→</span></div>
+    <div><span class="key tap" onclick="prevTrack()">←</span> <span class="key tap" onclick="nextTrack()">→</span></div>
     <div class="lbl">JOG / 트랙 이동</div>
-    <div style="margin-top: 12px;"><span class="key">M</span></div>
+    <div style="margin-top: 12px;"><span class="key tap" onclick="goMobile()">M</span></div>
     <div class="lbl">한 줄 쓰기</div>
-    <div style="margin-top: 12px;"><span class="key">ENTER</span></div>
+    <div style="margin-top: 12px;"><span class="key tap" onclick="goMobile()">ENTER</span></div>
     <div class="lbl">시작</div>
   </div>
 </div>
@@ -2352,6 +2377,18 @@ function updateLP() {
       flashJog();
     });
   });
+}
+
+// ★ 폰 터치 가능: ← / → / M / ENTER 버튼 클릭 핸들러
+function prevTrack() {
+  currentIdx = (currentIdx - 1 + TRACKS.length) % TRACKS.length;
+  updateLP();
+  flashJog();
+}
+function nextTrack() {
+  currentIdx = (currentIdx + 1) % TRACKS.length;
+  updateLP();
+  flashJog();
 }
 
 function flashJog() {

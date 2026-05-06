@@ -2,23 +2,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" id="vmeta" content="width=1920, initial-scale=1.0">
-<script>
-(function() {
-  function fitViewport() {
-    var w = Math.max(window.innerWidth, document.documentElement.clientWidth);
-    var meta = document.getElementById('vmeta');
-    if (!meta) return;
-    if (w < 1920) {
-      meta.setAttribute('content', 'width=1920, initial-scale=' + (w/1920).toFixed(4) + ', user-scalable=yes');
-    } else {
-      meta.setAttribute('content', 'width=1920, initial-scale=1.0');
-    }
-  }
-  fitViewport();
-  window.addEventListener('orientationchange', function(){ setTimeout(fitViewport, 100); });
-})();
-</script>
+<!-- 모바일 호환: width=1920 단독 = 브라우저 자동 fit (iOS Safari·Chrome Mobile 모두 OK) -->
+<meta name="viewport" content="width=1920, user-scalable=yes">
 <title>B-SIDE RECORDS — 울트라백화점 부산</title>
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="preconnect" href="https://fonts.googleapis.com">

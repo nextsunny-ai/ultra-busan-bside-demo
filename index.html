@@ -1,0 +1,2509 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" id="vmeta" content="width=1920, initial-scale=1.0">
+<script>
+(function() {
+  function fitViewport() {
+    var w = Math.max(window.innerWidth, document.documentElement.clientWidth);
+    var meta = document.getElementById('vmeta');
+    if (!meta) return;
+    if (w < 1920) {
+      meta.setAttribute('content', 'width=1920, initial-scale=' + (w/1920).toFixed(4) + ', user-scalable=yes');
+    } else {
+      meta.setAttribute('content', 'width=1920, initial-scale=1.0');
+    }
+  }
+  fitViewport();
+  window.addEventListener('orientationchange', function(){ setTimeout(fitViewport, 100); });
+})();
+</script>
+<title>B-SIDE RECORDS — 울트라백화점 부산</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Yeseva+One&family=Nanum+Myeongjo:wght@400;700;800&family=Gowun+Batang:wght@400;700&family=Noto+Serif+KR:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --olive: #7A8B3A;
+  --olive-light: #9CAD4F;
+  --olive-deep: #5A6628;
+  --charcoal: #1F1F1D;
+  --cream: #ECE4C2;
+  --cream-dark: #D8CFAB;
+  --paper: #E8DFB8;
+  --mustard: #D4A24C;
+  --red: #B43E3E;
+  --black: #0A0A0A;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+/* form 요소가 OS 시스템 폰트로 fallback 안 되게 강제 상속 */
+button, input, textarea, select { font-family: inherit; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--cream);
+  color: var(--charcoal);
+  /* ★ 빈티지 LP 무드 통일 = 본문 베이스 명조 */
+  font-family: 'Noto Serif KR', 'Nanum Myeongjo', 'Pretendard', serif;
+  font-weight: 400;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* === GLOBAL TEXTURE OVERLAYS === */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle at 1px 1px, var(--charcoal) 0.7px, transparent 0.7px);
+  background-size: 4px 4px;
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 100;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 1px, transparent 1px, transparent 3px);
+  pointer-events: none;
+  z-index: 101;
+  mix-blend-mode: multiply;
+}
+
+/* SVG noise texture */
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 102;
+  opacity: 0.18;
+  mix-blend-mode: multiply;
+}
+
+/* === SCREEN CONTAINER === */
+.screen {
+  position: fixed;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  z-index: 1;
+}
+.screen.active { display: flex; }
+
+/* ============================================ */
+/* SCREEN 0 — INTRO                              */
+/* ============================================ */
+#intro {
+  background: var(--charcoal);
+  color: var(--cream);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 5vh 5vw;
+  overflow: auto;
+}
+#intro::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.6) 100%);
+  pointer-events: none;
+}
+.intro-mark {
+  font-family: 'IBM Plex Mono', 'Courier New', 'Nanum Myeongjo', monospace, serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.5em;
+  color: var(--mustard);
+  margin-bottom: 32px;
+}
+.intro-title {
+  font-family: 'Yeseva One', 'Abril Fatface', Georgia, serif;
+  font-weight: 400;
+  font-size: 140px;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  color: var(--cream);
+}
+.intro-title span {
+  color: var(--olive-light);
+  font-style: italic;
+}
+.intro-tag {
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  margin-top: 40px;
+  color: var(--cream-dark);
+}
+.intro-tag-kr {
+  font-family: 'Nanum Myeongjo', 'Noto Serif KR', serif;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  margin-top: 14px;
+  color: var(--mustard);
+  opacity: 0.9;
+}
+.intro-divider {
+  width: 80px;
+  height: 2px;
+  background: var(--mustard);
+  margin: 60px auto 40px;
+}
+.intro-meta {
+  font-family: 'IBM Plex Mono', 'Courier New', 'Nanum Myeongjo', monospace, serif;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  color: var(--cream-dark);
+  line-height: 1.8;
+}
+.intro-cta {
+  margin-top: 80px;
+  font-family: 'IBM Plex Mono', 'Courier New', 'Nanum Myeongjo', monospace, serif;
+  font-size: 14px;
+  letter-spacing: 0.3em;
+  color: var(--mustard);
+  animation: blink 1.5s infinite;
+}
+/* NEXT 안내 = 영문 모노 + 한글 명조 (시스템 폰트 fallback X) */
+.intro-next {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--cream-dark);
+  opacity: 0.6;
+  margin-top: 24px;
+  display: inline-flex;
+  gap: 8px;
+  align-items: baseline;
+}
+.intro-next-en {
+  font-family: 'IBM Plex Mono', 'Courier New', 'Nanum Myeongjo', monospace, serif;
+  font-weight: 500;
+}
+.intro-next-kr {
+  font-family: 'Nanum Myeongjo', 'Noto Serif KR', serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+}
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
+}
+
+/* ============================================ */
+/* SCREEN 1 — MAIN (LP BROWSE)                   */
+/* ============================================ */
+#main {
+  background: var(--cream);
+  flex-direction: column;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 48px;
+  border-bottom: 2px solid var(--charcoal);
+  background: var(--cream);
+  position: relative;
+  z-index: 5;
+}
+.top-bar::before {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--charcoal);
+}
+.brand {
+  font-weight: 900;
+  font-size: 24px;
+  letter-spacing: 0.05em;
+}
+.brand .small {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--olive);
+  display: block;
+  margin-top: 2px;
+}
+.top-meta {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--charcoal);
+  text-align: right;
+}
+.top-meta strong {
+  color: var(--red);
+}
+
+.main-stage {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 60px;
+  padding: 40px 60px;
+  align-items: center;
+  position: relative;
+}
+
+/* LP DISC */
+.lp-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lp-shadow {
+  position: absolute;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,0,0,0.4) 0%, transparent 70%);
+  filter: blur(20px);
+  z-index: 0;
+}
+
+.lp-disc {
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, var(--olive) 0%, var(--olive) 16%,
+      var(--charcoal) 16.5%, var(--charcoal) 17%,
+      var(--black) 17.5%, var(--black) 100%);
+  position: relative;
+  z-index: 1;
+  animation: spin 6s linear infinite;
+  box-shadow:
+    0 4px 30px rgba(0,0,0,0.4),
+    inset 0 0 0 4px var(--charcoal);
+  /* GPU 레이어 분리 = 회전 부드럽게 */
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* LP grooves */
+.lp-disc::before {
+  content: '';
+  position: absolute;
+  inset: 17%;
+  border-radius: 50%;
+  background:
+    repeating-radial-gradient(
+      circle,
+      var(--black) 0px,
+      var(--black) 2px,
+      #1a1a1a 2px,
+      #1a1a1a 3px
+    );
+}
+
+/* center label */
+.lp-disc::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 32%;
+  height: 32%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, var(--olive-light) 0%, var(--olive) 60%, var(--olive-deep) 100%);
+  transform: translate(-50%, -50%);
+  box-shadow:
+    inset 0 0 0 1px var(--charcoal),
+    0 0 0 1px var(--olive-deep);
+}
+
+.lp-label-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 32%;
+  height: 32%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+}
+.lp-label-center .num {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cream);
+  letter-spacing: 0.15em;
+}
+.lp-label-center .lbl-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--cream);
+  margin-top: 4px;
+  line-height: 1.2;
+}
+.lp-label-center .lbl-mark {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 9px;
+  color: var(--cream-dark);
+  letter-spacing: 0.2em;
+  margin-top: 6px;
+}
+
+.lp-center-hole {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: var(--charcoal);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.lp-disc.paused {
+  animation-play-state: paused;
+}
+
+/* Tonearm */
+.tonearm {
+  position: absolute;
+  top: 8%;
+  right: -20px;
+  width: 220px;
+  height: 12px;
+  background: linear-gradient(90deg, var(--charcoal) 0%, #555 50%, var(--charcoal) 100%);
+  transform-origin: right center;
+  transform: rotate(-30deg);
+  z-index: 5;
+  border-radius: 6px;
+  transition: transform 0.5s ease;
+}
+.tonearm::before {
+  content: '';
+  position: absolute;
+  right: -8px;
+  top: -8px;
+  width: 28px;
+  height: 28px;
+  background: var(--charcoal);
+  border-radius: 50%;
+  border: 3px solid #555;
+}
+.tonearm::after {
+  content: '';
+  position: absolute;
+  left: -4px;
+  top: -2px;
+  width: 16px;
+  height: 16px;
+  background: var(--mustard);
+  border-radius: 50%;
+}
+
+/* COVER INFO */
+.cover-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  padding: 36px 40px;
+  background: var(--paper);
+  border: 2px solid var(--charcoal);
+  box-shadow:
+    8px 8px 0 var(--charcoal),
+    8px 8px 0 1px var(--charcoal);
+  min-width: 0;
+  overflow: hidden;
+}
+
+.cover-info::before {
+  content: '';
+  position: absolute;
+  top: -2px; left: -2px; right: -2px; bottom: -2px;
+  background-image: radial-gradient(circle, var(--charcoal) 0.5px, transparent 0.5px);
+  background-size: 3px 3px;
+  opacity: 0.06;
+  pointer-events: none;
+}
+
+.cover-num {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  color: var(--olive);
+  font-weight: 700;
+}
+.cover-num::before {
+  content: '— ';
+}
+.cover-num::after {
+  content: ' —';
+}
+
+.cover-title {
+  font-size: clamp(34px, 3.6vw, 56px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  color: var(--charcoal);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.cover-artist {
+  word-break: keep-all;
+}
+.cover-num {
+  word-break: keep-all;
+  white-space: normal;
+}
+
+.cover-artist {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--olive-deep);
+  font-style: italic;
+}
+.cover-artist::before {
+  content: 'by ';
+  color: var(--charcoal);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.cover-divider {
+  width: 60px;
+  height: 3px;
+  background: var(--charcoal);
+  margin: 8px 0;
+}
+
+.cover-opening {
+  font-family: 'Noto Serif KR', 'Pretendard', serif;
+  font-size: 22px;
+  line-height: 1.6;
+  color: var(--charcoal);
+  font-style: italic;
+  position: relative;
+  padding-left: 20px;
+  border-left: 3px solid var(--mustard);
+}
+.cover-opening::before {
+  content: '"';
+  font-size: 60px;
+  color: var(--mustard);
+  position: absolute;
+  left: -8px;
+  top: -20px;
+  font-family: 'Yeseva One', 'Abril Fatface', Georgia, serif;
+}
+
+.cover-hint {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--olive-deep);
+  margin-top: 4px;
+}
+.cover-hint::before {
+  content: '▸ ';
+  color: var(--mustard);
+}
+
+.cover-meta {
+  display: flex;
+  gap: 24px;
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--charcoal);
+  margin-top: 12px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--charcoal);
+  opacity: 0.7;
+}
+
+/* QR BOX */
+.qr-box {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  background: var(--charcoal);
+  color: var(--cream);
+  padding: 16px;
+  border: 2px solid var(--charcoal);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 6;
+}
+.qr-img {
+  width: 80px;
+  height: 80px;
+  background:
+    linear-gradient(45deg, transparent 25%, var(--cream) 25%, var(--cream) 50%, transparent 50%, transparent 75%, var(--cream) 75%),
+    linear-gradient(-45deg, transparent 25%, var(--cream) 25%, var(--cream) 50%, transparent 50%, transparent 75%, var(--cream) 75%);
+  background-size: 8px 8px;
+  background-color: var(--charcoal);
+  border: 4px solid var(--cream);
+}
+.qr-text {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  line-height: 1.5;
+}
+.qr-text strong {
+  display: block;
+  font-size: 13px;
+  color: var(--mustard);
+  margin-bottom: 4px;
+}
+
+/* TRACK LIST RIBBON */
+.track-strip {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--charcoal);
+  color: var(--cream);
+  display: flex;
+  overflow: hidden;
+  border-top: 4px solid var(--mustard);
+  z-index: 4;
+}
+.track-strip-inner {
+  display: flex;
+  gap: 0;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+.track-item {
+  padding: 14px 24px;
+  border-right: 1px solid #444;
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 220px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.track-item:hover { background: #2a2a2a; }
+.track-item.current {
+  background: var(--olive);
+  color: var(--cream);
+  font-weight: 700;
+}
+.track-item .tr-num {
+  color: var(--mustard);
+  font-weight: 700;
+}
+
+/* CONTROLS HINT */
+.controls-hint {
+  position: absolute;
+  bottom: 70px;
+  left: 24px;
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--olive-deep);
+  text-align: center;
+  z-index: 7;
+  background: rgba(216, 207, 171, 0.85);
+  padding: 12px 10px;
+  border: 1px solid var(--charcoal);
+  backdrop-filter: blur(2px);
+}
+.controls-hint .key {
+  display: inline-block;
+  background: var(--charcoal);
+  color: var(--cream);
+  padding: 4px 8px;
+  margin: 4px 2px;
+  font-weight: 700;
+  border-radius: 2px;
+}
+.controls-hint .lbl {
+  display: block;
+  margin-top: 4px;
+  font-size: 9px;
+  opacity: 0.7;
+}
+
+/* ============================================ */
+/* SCREEN 2 — MOBILE WRITE                       */
+/* ============================================ */
+#mobile {
+  background: var(--charcoal);
+  align-items: center;
+  justify-content: center;
+}
+.mobile-stage {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+}
+.mobile-frame {
+  width: 380px;
+  height: 760px;
+  background: var(--charcoal);
+  border-radius: 48px;
+  border: 14px solid var(--black);
+  padding: 30px 24px;
+  position: relative;
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.5),
+    inset 0 0 0 1px #333;
+}
+.mobile-frame::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 22px;
+  background: var(--black);
+  border-radius: 0 0 12px 12px;
+  z-index: 2;
+}
+.mobile-screen {
+  width: 100%;
+  height: 100%;
+  background: var(--cream);
+  border-radius: 28px;
+  padding: 50px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+.mobile-screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 1px 1px, var(--charcoal) 0.5px, transparent 0.5px);
+  background-size: 4px 4px;
+  opacity: 0.05;
+  pointer-events: none;
+}
+.m-brand {
+  font-weight: 900;
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  color: var(--olive);
+  margin-bottom: 4px;
+}
+.m-cover-num {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--charcoal);
+  opacity: 0.6;
+}
+.m-divider {
+  width: 30px;
+  height: 2px;
+  background: var(--charcoal);
+  margin: 16px 0 12px;
+}
+.m-title {
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+.m-artist {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--olive-deep);
+  margin-bottom: 20px;
+}
+.m-opening {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 15px;
+  line-height: 1.6;
+  font-style: italic;
+  padding: 16px;
+  background: var(--paper);
+  border-left: 3px solid var(--mustard);
+  margin-bottom: 16px;
+}
+.m-prompt {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--olive-deep);
+  margin-bottom: 8px;
+}
+.m-textarea {
+  width: 100%;
+  flex: 1;
+  background: var(--cream-dark);
+  border: 2px solid var(--charcoal);
+  padding: 14px;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 16px;
+  line-height: 1.6;
+  resize: none;
+  outline: none;
+  font-style: italic;
+}
+.m-textarea:focus { background: white; }
+.m-counter {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 10px;
+  text-align: right;
+  margin-top: 6px;
+  color: var(--charcoal);
+  opacity: 0.6;
+}
+/* (.m-submit dead CSS 제거됨 — 어플 4단계로 전환 후 .m-btn으로 대체) */
+
+.mobile-side-info {
+  color: var(--cream);
+  max-width: 340px;
+}
+.mobile-side-info h2 {
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.mobile-side-info p {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  line-height: 1.8;
+  color: var(--cream-dark);
+}
+.mobile-side-info .step {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  margin-top: 16px;
+}
+.mobile-side-info .step-num {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--mustard);
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+}
+.mobile-side-info .step-txt {
+  font-size: 13px;
+}
+
+/* ============================================ */
+/* SCREEN 3 — PREVIEW (SLEEVE COMPOSE)           */
+/* ============================================ */
+#preview {
+  background: var(--cream);
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-stage {
+  display: flex;
+  gap: 60px;
+  align-items: center;
+}
+
+.sleeve {
+  /* B6 비율 5:7 (실물 128×182mm) */
+  width: 460px;
+  aspect-ratio: 5 / 7;
+  background: var(--paper);
+  position: relative;
+  padding: 32px 30px 26px;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid var(--charcoal);
+  box-shadow:
+    /* 종이 두께·들림 */
+    12px 14px 0 var(--charcoal),
+    18px 22px 36px rgba(0,0,0,0.28);
+  overflow: hidden;
+  /* 살짝 기울임 = 들고 있는 느낌 */
+  transform: rotate(-1deg);
+}
+.sleeve::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 1px 1px, var(--charcoal) 0.6px, transparent 0.6px),
+    repeating-linear-gradient(45deg, transparent 0, transparent 4px, rgba(0,0,0,0.02) 4px, rgba(0,0,0,0.02) 8px);
+  background-size: 4px 4px, 12px 12px;
+  opacity: 0.18;
+  pointer-events: none;
+}
+/* 종이 우상단 살짝 접힘 */
+.sleeve::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 22px; height: 22px;
+  background: linear-gradient(225deg, var(--cream-dark) 50%, transparent 50%);
+  pointer-events: none;
+  opacity: 0.5;
+  z-index: 2;
+}
+/* 가짜 레이블·발매년도·카탈로그번호 */
+.sleeve-label-meta {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  color: var(--charcoal);
+  opacity: 0.55;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+/* LYRICS BY 라벨 */
+.sleeve-body .user-credit {
+  display: block;
+  margin-top: 14px;
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--mustard);
+  font-weight: 700;
+  text-align: right;
+}
+.sleeve-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 2px solid var(--charcoal);
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+}
+.sleeve-brand {
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+.sleeve-brand small {
+  display: block;
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: var(--olive);
+  margin-top: 2px;
+  font-weight: 400;
+}
+.sleeve-num {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-align: right;
+  line-height: 1.5;
+}
+.sleeve-num strong {
+  display: block;
+  font-size: 14px;
+  color: var(--mustard);
+}
+
+.sleeve-title {
+  font-size: 38px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.0;
+  margin-bottom: 6px;
+}
+.sleeve-artist {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--olive-deep);
+  font-style: italic;
+  margin-bottom: 20px;
+}
+
+.sleeve-body {
+  flex: 1;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 17px;
+  line-height: 1.7;
+  position: relative;
+  padding: 12px 0;
+}
+.sleeve-body .opening-text {
+  font-style: italic;
+  color: var(--charcoal);
+}
+.sleeve-body .user-text {
+  display: block;
+  margin-top: 14px;
+  color: var(--olive-deep);
+  font-weight: 500;
+  position: relative;
+  padding-left: 16px;
+  border-left: 3px solid var(--mustard);
+}
+.sleeve-body .user-text::before {
+  content: '— B-side —';
+  display: block;
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--mustard);
+  font-style: normal;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.sleeve-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-top: 1px dashed var(--charcoal);
+  padding-top: 14px;
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  margin-top: auto;
+}
+.sleeve-footer .signature {
+  font-family: 'Noto Serif KR', serif;
+  font-style: italic;
+  font-size: 12px;
+  color: var(--olive-deep);
+  letter-spacing: normal;
+}
+
+/* preview side info */
+.preview-side {
+  max-width: 360px;
+}
+.preview-side .lbl {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: var(--olive);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.preview-side h2 {
+  font-size: 56px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  margin-bottom: 24px;
+}
+.preview-side p {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 24px;
+  color: var(--charcoal);
+}
+.preview-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 32px;
+}
+.btn-print {
+  background: var(--charcoal);
+  color: var(--cream);
+  border: 2px solid var(--charcoal);
+  padding: 18px 24px;
+  font-family: 'Yeseva One', 'Abril Fatface', Georgia, serif;
+  font-weight: 400;
+  font-size: 18px;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s;
+}
+.btn-print:hover {
+  background: var(--mustard);
+  color: var(--charcoal);
+}
+.btn-print .key {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  background: var(--mustard);
+  color: var(--charcoal);
+  padding: 4px 10px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+.btn-back {
+  background: transparent;
+  color: var(--charcoal);
+  border: 2px solid var(--charcoal);
+  padding: 14px 20px;
+  font-family: 'Nanum Myeongjo', 'Noto Serif KR', serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.btn-back:hover { background: var(--cream-dark); }
+
+/* ============================================ */
+/* SCREEN 4 — PRINT                              */
+/* ============================================ */
+#printing {
+  background: var(--charcoal);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--cream);
+}
+.print-anim {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  margin-bottom: 40px;
+}
+.print-anim::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 4px solid var(--mustard);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1.2s linear infinite;
+}
+.print-anim::after {
+  content: '◉';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 60px;
+  color: var(--mustard);
+}
+.print-title {
+  font-size: 60px;
+  font-weight: 900;
+  margin-bottom: 16px;
+}
+.print-sub {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 14px;
+  letter-spacing: 0.3em;
+  color: var(--cream-dark);
+}
+/* ============== 인쇄 완료 = 좌우 2단 ============== */
+#printDone {
+  display: none;
+  width: 100%;
+  max-width: 1280px;
+  padding: 0 60px;
+  align-items: center;
+  justify-content: center;
+  gap: 100px;
+}
+#printDone.show { display: flex; }
+
+.done-left {
+  flex: 0 0 auto;
+  max-width: 520px;
+  text-align: left;
+}
+.done-right {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.done-num {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  color: var(--mustard);
+  margin-bottom: 16px;
+}
+.done-msg {
+  font-family: 'Yeseva One', 'Nanum Myeongjo', serif;
+  font-size: 56px;
+  font-weight: 400;
+  margin-bottom: 18px;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+.done-msg em {
+  color: var(--olive-light);
+  font-style: italic;
+  font-family: 'Abril Fatface', 'Yeseva One', serif;
+}
+.done-tag {
+  font-family: 'Nanum Myeongjo', 'Noto Serif KR', serif;
+  font-style: italic;
+  font-size: 18px;
+  color: var(--cream);
+  margin-bottom: 8px;
+  max-width: 520px;
+  line-height: 1.5;
+}
+.done-sub {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--cream-dark);
+  opacity: 0.7;
+  margin-bottom: 36px;
+}
+.done-cta {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  color: var(--mustard);
+  border: 1px solid var(--mustard);
+  padding: 12px 24px;
+  cursor: pointer;
+  display: inline-block;
+}
+.done-cta:hover { background: var(--mustard); color: var(--charcoal); }
+
+/* === printed-sleeve = 인쇄된 자켓 시각화 (B6) === */
+.printed-label {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  color: var(--mustard);
+  text-align: center;
+  animation: blink 2s infinite;
+}
+.printed-sleeve {
+  /* B6 비율 5:7 */
+  width: 360px;
+  aspect-ratio: 5 / 7;
+  background: var(--paper);
+  color: var(--charcoal);
+  position: relative;
+  padding: 26px 24px 22px;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid var(--charcoal);
+  box-shadow:
+    /* 종이 들림 = 깊은 그림자 */
+    0 4px 0 var(--charcoal),
+    14px 18px 0 rgba(0,0,0,0.5),
+    24px 28px 60px rgba(0,0,0,0.5);
+  overflow: hidden;
+  transform: rotate(-2deg);
+  animation: sleeve-pop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes sleeve-pop {
+  0% { opacity: 0; transform: translateY(40px) rotate(-6deg) scale(0.9); }
+  100% { opacity: 1; transform: translateY(0) rotate(-2deg) scale(1); }
+}
+.printed-sleeve::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 1px 1px, var(--charcoal) 0.5px, transparent 0.5px),
+    repeating-linear-gradient(45deg, transparent 0, transparent 4px, rgba(0,0,0,0.02) 4px, rgba(0,0,0,0.02) 8px);
+  background-size: 4px 4px, 12px 12px;
+  opacity: 0.18;
+  pointer-events: none;
+}
+.printed-sleeve::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 18px; height: 18px;
+  background: linear-gradient(225deg, var(--cream-dark) 50%, transparent 50%);
+  pointer-events: none;
+  opacity: 0.6;
+  z-index: 2;
+}
+/* printed-sleeve 안 = .sleeve 자식들 스타일 그대로 상속 (sleeve-header·sleeve-title·sleeve-artist 등 이미 정의됨) */
+.printed-sleeve .sleeve-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 2px solid var(--charcoal);
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+}
+.printed-sleeve .sleeve-brand {
+  font-family: 'Yeseva One', serif;
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  color: var(--charcoal);
+}
+.printed-sleeve .sleeve-brand small {
+  display: block;
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 6px;
+  letter-spacing: 0.18em;
+  color: var(--olive);
+  margin-top: 2px;
+}
+.printed-sleeve .sleeve-num {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-align: right;
+  line-height: 1.5;
+  color: var(--charcoal);
+}
+.printed-sleeve .sleeve-num strong {
+  display: block;
+  font-size: 10px;
+  color: var(--mustard);
+}
+.printed-sleeve .sleeve-title {
+  font-family: 'Nanum Myeongjo', 'Noto Serif KR', serif !important;
+  font-weight: 800 !important;
+  font-size: 28px;
+  letter-spacing: -0.03em;
+  line-height: 1.0;
+  margin-bottom: 4px;
+  color: var(--charcoal);
+}
+.printed-sleeve .sleeve-artist {
+  font-family: 'Nanum Myeongjo', serif !important;
+  font-style: italic;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--olive-deep);
+  margin-bottom: 6px;
+}
+.printed-sleeve .sleeve-label-meta {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 7px;
+  letter-spacing: 0.2em;
+  color: var(--charcoal);
+  opacity: 0.55;
+  margin-bottom: 14px;
+}
+.printed-sleeve .sleeve-body {
+  flex: 1;
+  font-family: 'Nanum Myeongjo', 'Noto Serif KR', serif !important;
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--charcoal);
+  position: relative;
+  padding: 6px 0;
+}
+.printed-sleeve .sleeve-body .opening-text {
+  font-style: italic;
+}
+.printed-sleeve .sleeve-body .user-text {
+  display: block;
+  margin-top: 10px;
+  color: var(--olive-deep);
+  font-weight: 500;
+  position: relative;
+  padding-left: 10px;
+  border-left: 2px solid var(--mustard);
+}
+.printed-sleeve .sleeve-body .user-text::before {
+  content: '— B-side —';
+  display: block;
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 7px;
+  letter-spacing: 0.3em;
+  color: var(--mustard);
+  font-style: normal;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.printed-sleeve .sleeve-body .user-credit {
+  display: block;
+  margin-top: 10px;
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 7px;
+  letter-spacing: 0.3em;
+  color: var(--mustard);
+  font-weight: 700;
+  text-align: right;
+}
+.printed-sleeve .sleeve-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-top: 1px dashed var(--charcoal);
+  padding-top: 8px;
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 7px;
+  letter-spacing: 0.2em;
+  margin-top: auto;
+  color: var(--charcoal);
+}
+.printed-sleeve .sleeve-footer .signature {
+  font-family: 'Nanum Myeongjo', serif !important;
+  font-style: italic;
+  font-size: 9px;
+  color: var(--olive-deep);
+  letter-spacing: normal;
+}
+
+/* ============================================ */
+/* SHARED — DEMO BADGE                           */
+/* ============================================ */
+.demo-badge {
+  position: fixed;
+  top: 8px;
+  right: 8px;
+  background: rgba(180,62,62,0.85);
+  color: var(--cream);
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 8px;
+  letter-spacing: 0.25em;
+  padding: 3px 8px;
+  z-index: 999;
+  font-weight: 600;
+  border-radius: 100px;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+.demo-badge:hover { opacity: 1; }
+
+/* === LP rotation overlay (jog feedback) === */
+.jog-feedback {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--mustard);
+  background: var(--charcoal);
+  padding: 8px 14px;
+  opacity: 0;
+  z-index: 10;
+  transition: opacity 0.2s;
+}
+.jog-feedback.flash { opacity: 1; }
+
+/* === fadeIn anim on screen change === */
+.screen.active .cover-info,
+.screen.active .lp-stage,
+.screen.active .mobile-stage,
+.screen.active .preview-stage {
+  animation: fadeUp 0.5s ease-out;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================ */
+/* RETRO TITLE OVERRIDE — LP 라벨 / 매거진 톤    */
+/* ============================================ */
+
+/* 영문 헤드 = 70s 디스플레이 (Yeseva One) */
+.intro-title {
+  font-family: 'Yeseva One', 'Abril Fatface', Georgia, serif !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.02em;
+  font-size: clamp(56px, 11vw, 130px);
+  line-height: 0.92;
+  margin-bottom: 16px;
+}
+.intro-mark {
+  font-size: clamp(11px, 0.9vw, 13px);
+  margin-bottom: clamp(16px, 2.5vh, 28px);
+}
+.intro-tag {
+  font-size: clamp(13px, 1.2vw, 17px);
+  margin-top: clamp(20px, 3vh, 36px);
+}
+.intro-divider {
+  margin: clamp(28px, 4vh, 50px) auto clamp(20px, 2.5vh, 32px);
+}
+.intro-meta {
+  font-size: clamp(11px, 1vw, 13px);
+  line-height: 1.8;
+}
+.intro-cta {
+  margin-top: clamp(32px, 5vh, 70px);
+  font-size: clamp(11px, 1vw, 13px);
+}
+.intro-title span {
+  font-family: 'Abril Fatface', 'Yeseva One', Georgia, serif !important;
+  font-style: italic;
+  color: var(--olive-light);
+  font-weight: 400;
+}
+.brand {
+  font-family: 'Yeseva One', Georgia, serif !important;
+  font-weight: 400;
+  font-size: 28px;
+  letter-spacing: 0.02em;
+}
+.brand .small {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif !important;
+}
+.sleeve-brand {
+  font-family: 'Yeseva One', Georgia, serif !important;
+  font-weight: 400;
+  font-size: 20px;
+}
+.sleeve-brand small {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif !important;
+}
+.m-brand {
+  font-family: 'Yeseva One', Georgia, serif !important;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: 0.05em;
+}
+
+/* 한글 곡 제목 = 인쇄소 명조 (Nanum Myeongjo ExtraBold) */
+.cover-title {
+  font-family: 'Nanum Myeongjo', 'Noto Serif KR', serif !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.04em;
+  font-size: 68px;
+  line-height: 1.0;
+  font-style: normal;
+}
+.sleeve-title {
+  font-family: 'Nanum Myeongjo', 'Noto Serif KR', serif !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.03em;
+  font-size: 42px;
+  line-height: 1.0;
+}
+.m-title {
+  font-family: 'Nanum Myeongjo', 'Noto Serif KR', serif !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em;
+  font-size: 28px;
+  line-height: 1.05;
+}
+.lp-label-center .lbl-title {
+  font-family: 'Nanum Myeongjo', 'Noto Serif KR', serif !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em;
+  font-size: 17px;
+}
+
+/* 한글 본문 시작문 = Noto Serif KR (이미 적용 중인데 강화) */
+.cover-opening,
+.sleeve-body,
+.m-opening,
+.done-tag {
+  font-family: 'Nanum Myeongjo', 'Noto Serif KR', serif !important;
+}
+
+/* artist (필명) = 손글씨 느낌 약간 — italic + 라이트 */
+.cover-artist,
+.sleeve-artist,
+.m-artist {
+  font-family: 'Nanum Myeongjo', 'Noto Serif KR', serif !important;
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* done message = 빈티지 매거진 헤드 */
+.done-msg {
+  font-family: 'Yeseva One', Georgia, serif !important;
+  font-weight: 400 !important;
+  font-size: 88px;
+}
+.done-msg .accent {
+  font-family: 'Abril Fatface', Georgia, serif !important;
+  font-style: italic;
+}
+.print-title {
+  font-family: 'Yeseva One', Georgia, serif !important;
+  font-weight: 400;
+}
+
+/* preview side h2 = 빈티지 매거진 */
+.preview-side h2 {
+  font-family: 'Nanum Myeongjo', 'Noto Serif KR', serif !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.04em;
+}
+.mobile-side-info h2 {
+  font-family: 'Nanum Myeongjo', 'Noto Serif KR', serif !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.03em;
+}
+
+/* ============================================ */
+/* MOBILE 4-STEP STYLES                          */
+/* ============================================ */
+
+/* Step bar */
+.m-stepbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 16px;
+  padding: 4px 0;
+}
+.m-step-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--cream-dark);
+  border: 1.5px solid var(--charcoal);
+  transition: all 0.3s;
+}
+.m-step-dot.active {
+  background: var(--mustard);
+  transform: scale(1.3);
+}
+.m-step-dot.done {
+  background: var(--olive);
+}
+.m-step-line {
+  width: 22px;
+  height: 1.5px;
+  background: var(--charcoal);
+  opacity: 0.3;
+}
+
+/* Step container */
+.m-step {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+  animation: stepFade 0.35s ease-out;
+}
+.m-step.active { display: flex; }
+@keyframes stepFade {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.m-step-num {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--olive);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.m-brand-sm {
+  font-family: 'Yeseva One', Georgia, serif;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+.m-cover-num-sm {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--charcoal);
+  opacity: 0.6;
+  margin-bottom: 16px;
+}
+
+/* mini LP for welcome */
+.m-mini-lp {
+  width: 150px;
+  height: 150px;
+  margin: 8px auto 16px;
+  border-radius: 50%;
+  background:
+    /* 가운데 hole */
+    radial-gradient(circle at center, var(--charcoal) 0 2.5px, transparent 2.5px 5px),
+    /* 라벨 = 올리브 그라디언트 */
+    radial-gradient(circle, var(--olive-light) 0%, var(--olive) 22%, var(--olive-deep) 30%, transparent 32%),
+    /* grooves (얇은 줄들) */
+    repeating-radial-gradient(circle, rgba(255,255,255,0.04) 0 1px, transparent 1px 2.4px),
+    /* 베이스 비닐 검정 */
+    radial-gradient(circle, #2a2a28 0%, var(--black) 70%);
+  position: relative;
+  animation: spin 6s linear infinite;
+  box-shadow:
+    0 6px 20px rgba(0,0,0,0.5),
+    inset 0 0 0 2px var(--charcoal),
+    inset 0 0 30px rgba(0,0,0,0.4);
+}
+/* B-SIDE 라벨 텍스트 (살짝) */
+.m-mini-lp::before {
+  content: 'B-SIDE';
+  position: absolute;
+  top: 36%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Yeseva One', serif;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--cream);
+  z-index: 2;
+  white-space: nowrap;
+}
+.m-mini-lp::after {
+  content: '45 RPM';
+  position: absolute;
+  bottom: 36%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 7px;
+  letter-spacing: 0.25em;
+  color: var(--cream-dark);
+  z-index: 2;
+  white-space: nowrap;
+}
+
+/* Welcome */
+.m-welcome-title {
+  font-family: 'Nanum Myeongjo', serif !important;
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin: 12px 0 16px;
+}
+.m-welcome-text {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--charcoal);
+  opacity: 0.85;
+  margin-bottom: auto;
+  padding-bottom: 16px;
+}
+
+/* Common step title */
+.m-step-title {
+  font-family: 'Nanum Myeongjo', serif !important;
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 8px 0 12px;
+}
+.m-step-desc {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--charcoal);
+  opacity: 0.75;
+  margin-bottom: 20px;
+}
+.m-step-desc.center { text-align: center; margin-top: 16px; }
+
+/* Input */
+.m-input-text {
+  width: 100%;
+  background: var(--cream-dark);
+  border: 2px solid var(--charcoal);
+  padding: 14px;
+  font-family: 'Nanum Myeongjo', serif;
+  font-size: 18px;
+  font-weight: 700;
+  outline: none;
+  text-align: center;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+.m-input-text:focus { background: white; }
+
+/* Buttons */
+.m-btn {
+  background: var(--charcoal);
+  color: var(--cream);
+  border: 2px solid var(--charcoal);
+  padding: 14px 18px;
+  font-family: 'Nanum Myeongjo', 'Noto Serif KR', serif;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex: 1;
+}
+.m-btn:hover { background: var(--olive-deep); }
+.m-btn.primary { background: var(--charcoal); color: var(--cream); }
+.m-btn.ghost {
+  background: transparent;
+  color: var(--charcoal);
+  flex: 0 0 auto;
+  min-width: 56px;
+  padding-left: 14px;
+  padding-right: 14px;
+  white-space: nowrap;
+}
+.m-btn.ghost:hover { background: var(--cream-dark); }
+.m-btn:disabled {
+  background: var(--cream-dark) !important;
+  color: var(--charcoal);
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.m-btn-row {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+/* Mini sleeve preview */
+.m-mini-sleeve {
+  background: var(--paper);
+  border: 2px solid var(--charcoal);
+  padding: 18px;
+  margin: 8px 0 4px;
+  position: relative;
+  box-shadow: 4px 4px 0 var(--charcoal);
+}
+.m-mini-sleeve::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 1px 1px, var(--charcoal) 0.4px, transparent 0.4px);
+  background-size: 3px 3px;
+  opacity: 0.1;
+  pointer-events: none;
+}
+.mini-sleeve-num {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: var(--mustard);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.mini-sleeve-title {
+  font-family: 'Nanum Myeongjo', serif !important;
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  line-height: 1.0;
+  margin-bottom: 4px;
+}
+.mini-sleeve-artist {
+  font-family: 'Nanum Myeongjo', serif;
+  font-style: italic;
+  font-size: 10px;
+  color: var(--olive-deep);
+  margin-bottom: 12px;
+}
+.mini-sleeve-body {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 11px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.mini-opening {
+  font-style: italic;
+  color: var(--charcoal);
+}
+.mini-user {
+  display: block;
+  margin-top: 8px;
+  padding-left: 8px;
+  border-left: 2px solid var(--mustard);
+  color: var(--olive-deep);
+  font-weight: 500;
+}
+.mini-user::before {
+  content: '— B-side —';
+  display: block;
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 7px;
+  letter-spacing: 0.3em;
+  color: var(--mustard);
+  font-weight: 700;
+  font-style: normal;
+  margin-bottom: 4px;
+}
+.mini-sleeve-footer {
+  font-family: 'IBM Plex Mono', 'Nanum Myeongjo', monospace, serif;
+  font-size: 7px;
+  letter-spacing: 0.2em;
+  color: var(--charcoal);
+  opacity: 0.5;
+  border-top: 1px dashed var(--charcoal);
+  padding-top: 8px;
+}
+</style>
+</head>
+<body>
+
+<!-- SVG noise grain -->
+<svg class="grain" xmlns="http://www.w3.org/2000/svg">
+  <filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3"/></filter>
+  <rect width="100%" height="100%" filter="url(#noise)"/>
+</svg>
+
+<div class="demo-badge">DEMO v1.1</div>
+
+<!-- ============================================ -->
+<!-- SCREEN 0 — INTRO                              -->
+<!-- ============================================ -->
+<div class="screen active" id="intro" onclick="goMain(); beep(440, 0.1);" style="cursor: pointer;">
+  <div class="intro-mark">★ ULTRA DEPARTMENT STORE ★ BUSAN ★</div>
+  <h1 class="intro-title">B-SIDE<br><span>RECORDS</span></h1>
+  <div class="intro-tag">DIG DEEP. THE OTHER SIDE OF SOUND.</div>
+  <div class="intro-tag-kr">— 한 면이 끝나면, 다른 한 면이 시작된다 —</div>
+  <div class="intro-divider"></div>
+  <div class="intro-meta">
+    17 ARTISTS · 17 SLEEVES · 1 LINE FROM YOU<br>
+    BUSAN · MAY 29 · 2026 — LIMITED PRESSING No.0001/9999
+  </div>
+  <div class="intro-cta">▸ CLICK ANYWHERE / PRESS [ENTER] ◂</div>
+  <div class="intro-next">NEXT ▸ LP 17곡 브라우즈 화면</div>
+</div>
+
+<!-- ============================================ -->
+<!-- SCREEN 1 — MAIN (LP BROWSE)                   -->
+<!-- ============================================ -->
+<div class="screen" id="main">
+  <div class="top-bar">
+    <div class="brand">
+      B-SIDE RECORDS
+      <span class="small">★ THE OTHER SIDE OF SOUND ★</span>
+    </div>
+    <div class="top-meta">
+      ULTRA DEPARTMENT STORE BUSAN<br>
+      <strong>2026.05.29 — LIMITED No.<span id="serial">0237</span>/9999</strong>
+    </div>
+  </div>
+
+  <div class="main-stage">
+    <div class="lp-stage">
+      <div class="lp-shadow"></div>
+      <div class="lp-disc" id="lpDisc">
+        <div class="lp-label-center">
+          <div class="num">B-SIDE No.<span id="lblNum">07</span></div>
+          <div class="lbl-title" id="lblTitle">서면 4번 출구</div>
+          <div class="lbl-mark">★ 45 RPM ★</div>
+        </div>
+      </div>
+      <div class="lp-center-hole"></div>
+      <div class="tonearm"></div>
+      <div class="jog-feedback" id="jogFb">▸ TRACK 07 ◂</div>
+    </div>
+
+    <div class="cover-info">
+      <div class="cover-num">B-SIDE No.<span id="coverNum">07</span> / 17</div>
+      <h2 class="cover-title" id="coverTitle">서면 4번 출구</h2>
+      <div class="cover-artist" id="coverArtist">박재우</div>
+      <div class="cover-divider"></div>
+      <div class="cover-opening" id="coverOpening">4번 출구 앞, 약속 시간보다 한 시간 일찍 도착했다.</div>
+      <div class="cover-hint">이 곡의 마지막 한 줄을 적어주세요</div>
+      <div class="cover-meta">
+        <span>SIDE B</span>
+        <span>3:42</span>
+        <span>45 RPM</span>
+        <span>MONO</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="qr-box" onclick="goMobile()" style="cursor:pointer;">
+    <div class="qr-img"></div>
+    <div class="qr-text">
+      <strong>SCAN ▸ WRITE</strong>
+      폰으로 한 줄 쓰기<br>
+      [M] / 클릭
+    </div>
+  </div>
+
+  <div class="track-strip">
+    <div class="track-strip-inner" id="trackStrip"></div>
+  </div>
+
+  <div class="controls-hint">
+    <div><span class="key">←</span> <span class="key">→</span></div>
+    <div class="lbl">JOG / 트랙 이동</div>
+    <div style="margin-top: 12px;"><span class="key">M</span></div>
+    <div class="lbl">한 줄 쓰기</div>
+    <div style="margin-top: 12px;"><span class="key">ENTER</span></div>
+    <div class="lbl">시작</div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- SCREEN 2 — MOBILE WRITE (4단계)               -->
+<!-- ============================================ -->
+<div class="screen" id="mobile">
+  <div class="mobile-stage">
+    <div class="mobile-frame">
+      <div class="mobile-screen">
+
+        <!-- Step indicator -->
+        <div class="m-stepbar">
+          <div class="m-step-dot active" data-step="1"></div>
+          <div class="m-step-line"></div>
+          <div class="m-step-dot" data-step="2"></div>
+          <div class="m-step-line"></div>
+          <div class="m-step-dot" data-step="3"></div>
+          <div class="m-step-line"></div>
+          <div class="m-step-dot" data-step="4"></div>
+        </div>
+
+        <!-- ===== STEP 1: WELCOME ===== -->
+        <div class="m-step active" id="mStep1">
+          <div class="m-step-num">STEP 01 / 04</div>
+          <div class="m-brand">B-SIDE RECORDS</div>
+          <div class="m-cover-num-sm">No.<span class="mNum">07</span> / 17 · 부산</div>
+          <div class="m-mini-lp"></div>
+          <h3 class="m-welcome-title">한 면이 끝나면,<br>다른 한 면이<br>시작됩니다.</h3>
+          <p class="m-welcome-text">
+            17곡의 B-side 중 한 곡을 선택하셨습니다.<br><br>
+            이 곡의 마지막 한 줄은 비어 있습니다.<br>
+            당신이 그 한 줄을 적어주세요.
+          </p>
+          <button class="m-btn primary" onclick="mStep(2)">시작하기 →</button>
+        </div>
+
+        <!-- ===== STEP 2: NICKNAME ===== -->
+        <div class="m-step" id="mStep2">
+          <div class="m-step-num">STEP 02 / 04</div>
+          <div class="m-brand-sm">B-SIDE RECORDS</div>
+          <div class="m-divider"></div>
+          <h3 class="m-step-title">익명 작가로<br>한 줄을 남깁니다.</h3>
+          <p class="m-step-desc">B-side에서 사용할 필명을 적어주세요.<br>본명·SNS·실제 이름 X — 진짜 정체는 곡과 함께 묻힙니다.</p>
+          <div class="m-prompt">▸ 필명 (2~8자 · 한글·영문·숫자 OK)</div>
+          <input class="m-input-text" id="mNickInput" type="text" placeholder="예: 솜뭉치 · 7번출구 · B007" maxlength="8">
+          <div class="m-counter"><span id="mNickCount">0</span> / 8</div>
+          <div class="m-btn-row">
+            <button class="m-btn ghost" onclick="mStep(1)">←</button>
+            <button class="m-btn primary" id="mNickNext" onclick="mStep(3)" disabled>다음 →</button>
+          </div>
+        </div>
+
+        <!-- ===== STEP 3: WRITE ===== -->
+        <div class="m-step" id="mStep3">
+          <div class="m-step-num">STEP 03 / 04</div>
+          <div class="m-brand-sm">B-SIDE RECORDS</div>
+          <div class="m-cover-num">No.<span class="mNum">07</span></div>
+          <div class="m-divider"></div>
+          <h3 class="m-title" id="mTitle">서면 4번 출구</h3>
+          <div class="m-artist">by <span id="mArtist">박재우</span></div>
+          <div class="m-opening" id="mOpening">"4번 출구 앞, 약속 시간보다 한 시간 일찍 도착했다."</div>
+          <div class="m-prompt">▸ 이 곡의 마지막 한 줄</div>
+          <textarea class="m-textarea" id="mInput" placeholder="여기에 이어쓰세요... (최대 80자)" maxlength="80"></textarea>
+          <div class="m-counter"><span id="mCount">0</span> / 80</div>
+          <div class="m-btn-row">
+            <button class="m-btn ghost" onclick="mStep(2)">←</button>
+            <button class="m-btn primary" id="mSubmit" onclick="mStep(4)" disabled>이어쓰기 →</button>
+          </div>
+        </div>
+
+        <!-- ===== STEP 4: PREVIEW ===== -->
+        <div class="m-step" id="mStep4">
+          <div class="m-step-num">STEP 04 / 04 · 미리보기</div>
+          <div class="m-brand-sm">B-SIDE RECORDS</div>
+          <div class="m-divider"></div>
+          <div class="m-mini-sleeve">
+            <div class="mini-sleeve-num">No.<span class="mNum">07</span> · #<span id="mSerialMini">0237</span>/9999</div>
+            <div class="mini-sleeve-title" id="mTitleMini">서면 4번 출구</div>
+            <div class="mini-sleeve-artist">by <span id="mArtistMini">박재우</span> × <span id="mNickMini">익명</span></div>
+            <div class="mini-sleeve-body">
+              <span class="mini-opening" id="mOpeningMini">"4번 출구 앞..."</span>
+              <span class="mini-user" id="mUserMini">"내가 적은 한 줄"</span>
+            </div>
+            <div class="mini-sleeve-footer">2026.05.29 · BUSAN · 45 RPM</div>
+          </div>
+          <p class="m-step-desc center">
+            이대로 키오스크에 송출됩니다.<br>
+            현장에서 자켓이 인쇄되어 가져갈 수 있습니다.
+          </p>
+          <div class="m-btn-row">
+            <button class="m-btn ghost" onclick="mStep(3)">← 다시 쓰기</button>
+            <button class="m-btn primary" onclick="goPreview()">키오스크로 송출 ↗</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="mobile-side-info">
+      <h2>4단계 흐름.<br>한 줄을 위해.</h2>
+      <p>실제 전시에서는 키오스크 QR을 폰으로 스캔하면 이 어플이 열립니다.</p>
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-txt">WELCOME — 트랙 확인 / B-side 입장</div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-txt">NICKNAME — 익명 필명 등록</div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-txt">WRITE — 시작문 보고 한 줄 이어쓰기</div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-txt">PREVIEW — 자켓 합성 확인 → 키오스크 송출</div>
+      </div>
+      <p style="margin-top: 32px; font-size: 10px; opacity: 0.5; line-height: 1.6;">
+        ★ 시연: 폰 화면 안에서 직접 단계별로 진행 ★<br>
+        ESC 누르면 키오스크 화면으로 돌아감
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- SCREEN 3 — PREVIEW (SLEEVE)                   -->
+<!-- ============================================ -->
+<div class="screen" id="preview">
+  <div class="preview-stage">
+    <div class="sleeve">
+      <div class="sleeve-header">
+        <div class="sleeve-brand">B-SIDE RECORDS<small>★ ULTRA DEPT.STORE BUSAN ★</small></div>
+        <div class="sleeve-num">
+          B-SIDE No.<span id="sNum">07</span><br>
+          <strong>#<span id="sSerial">0237</span> / 9999</strong>
+        </div>
+      </div>
+      <h2 class="sleeve-title" id="sTitle">서면 4번 출구</h2>
+      <div class="sleeve-artist" id="sArtist">by 박재우 × ANONYMOUS</div>
+      <div class="sleeve-label-meta" id="sLabelMeta">ULTRA RECORDS · 1987 · ULTRA-007</div>
+      <div class="sleeve-body">
+        <span class="opening-text" id="sOpening">"4번 출구 앞, 약속 시간보다 한 시간 일찍 도착했다."</span>
+        <span class="user-text" id="sUserText">"그 한 시간 동안 나는 너에게 할 말을 천 번쯤 바꿨다."</span>
+        <span class="user-credit" id="sUserCredit">— LYRICS BY ANONYMOUS —</span>
+      </div>
+      <div class="sleeve-footer">
+        <div>2026.05.29 · BUSAN</div>
+        <div class="signature" id="sSignature">— B-side, 익명 작가 —</div>
+        <div>B6 · 45 RPM · MONO</div>
+      </div>
+    </div>
+    <div class="preview-side">
+      <div class="lbl">▸ SLEEVE PREVIEW</div>
+      <h2>당신의 <em>B-side</em><br>한 장.</h2>
+      <p>이대로 인쇄하시겠습니까?<br>현장에서 B6 자켓으로 출력되어 가져갈 수 있습니다.</p>
+      <div class="preview-actions">
+        <button class="btn-print" onclick="goPrint()">
+          PRINT SLEEVE <span class="key">P</span>
+        </button>
+        <button class="btn-back" onclick="goMobile()">
+          ← 다시 쓰기 <span style="font-family: 'IBM Plex Mono'; font-size: 10px;">[M]</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- SCREEN 4 — PRINTING                           -->
+<!-- ============================================ -->
+<div class="screen" id="printing">
+  <div id="printActive">
+    <div class="print-anim"></div>
+    <div class="print-title">PRINTING...</div>
+    <div class="print-sub">레이저 프린터 출력 중 · 약 12초</div>
+  </div>
+  <div id="printDone">
+    <div class="done-left">
+      <div class="done-num">★ B-SIDE No.<span id="dNum">07</span> · #<span id="dSerial">0237</span>/9999 ★</div>
+      <h1 class="done-msg">한정판 <em>B-side</em><br>발행 완료.</h1>
+      <div class="done-tag">"한 면이 끝나면,<br>다른 한 면이 시작된다."</div>
+      <div class="done-sub">당신의 한 줄은 곧 누군가의 시작이 됩니다.</div>
+      <div class="done-cta" onclick="goMain()">▸ 다음 곡으로 [SPACE]</div>
+    </div>
+
+    <!-- 우측 = 실제 출력된 자켓 미리보기 (B6) -->
+    <div class="done-right">
+      <div class="printed-label">▾ JUST PRINTED — B6 SLEEVE</div>
+      <div class="printed-sleeve">
+        <div class="sleeve-header">
+          <div class="sleeve-brand">B-SIDE RECORDS<small>★ ULTRA DEPT.STORE BUSAN ★</small></div>
+          <div class="sleeve-num">
+            B-SIDE No.<span id="pNum">07</span><br>
+            <strong>#<span id="pSerial">0237</span> / 9999</strong>
+          </div>
+        </div>
+        <h2 class="sleeve-title" id="pTitle">서면 4번 출구</h2>
+        <div class="sleeve-artist" id="pArtist">by 박재우 × ANONYMOUS</div>
+        <div class="sleeve-label-meta" id="pLabelMeta">ULTRA RECORDS · 1993 · ULTRA-07</div>
+        <div class="sleeve-body">
+          <span class="opening-text" id="pOpening">"4번 출구 앞, 약속 시간보다 한 시간 일찍 도착했다."</span>
+          <span class="user-text" id="pUserText">"그 한 시간 동안 나는 너에게 할 말을 천 번쯤 바꿨다."</span>
+          <span class="user-credit" id="pUserCredit">— LYRICS BY ANONYMOUS —</span>
+        </div>
+        <div class="sleeve-footer">
+          <div>2026.05.29 · BUSAN</div>
+          <div class="signature" id="pSignature">— B-side, 익명 작가 —</div>
+          <div>B6 · 45 RPM · MONO</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================
+// TRACK DATA — 17 B-side artists (부산 정서)
+// ============================================
+const TRACKS = [
+  { num: '01', title: '비 오는 마산항',     artist: '윤지호',   year: '1987', label: 'ULTRA RECORDS',   opening: '비가 시작될 때면 늘 그 부두가 떠오른다.' },
+  { num: '02', title: '한낮의 비행기',      artist: '이리나',   year: '1992', label: 'B-SIDE PRESSING', opening: '활주로 끝, 그가 마지막으로 손을 흔들었다.' },
+  { num: '03', title: '단정한 등',         artist: '강민수',   year: '1989', label: 'ULTRA RECORDS',   opening: '마지막으로 본 그의 뒷모습은,' },
+  { num: '04', title: '심야버스',          artist: '최영주',   year: '1995', label: 'GHOST SIDE',      opening: '새벽 두 시, 버스에는 우리 둘뿐이었다.' },
+  { num: '05', title: '오래된 라디오',      artist: '문장혁',   year: '1986', label: 'ULTRA RECORDS',   opening: '주파수를 맞추다 그 곡이 흘러나왔다.' },
+  { num: '06', title: '겨울 사진관',       artist: '한미경',   year: '1990', label: 'B-SIDE PRESSING', opening: '낡은 흑백 사진 속에서 너는 웃고 있었다.' },
+  { num: '07', title: '서면 4번 출구',     artist: '박재우',   year: '1993', label: 'ULTRA RECORDS',   opening: '4번 출구 앞, 약속 시간보다 한 시간 일찍 도착했다.' },
+  { num: '08', title: '바람이 잘 든 골목', artist: '서다영',   year: '1988', label: 'GHOST SIDE',      opening: '부산의 골목은 바람이 잘 든다.' },
+  { num: '09', title: '편지함',            artist: '정유준',   year: '1991', label: 'B-SIDE PRESSING', opening: '답장 없는 편지를 또 한 통 부쳤다.' },
+  { num: '10', title: '광안리 아침',       artist: '오현',     year: '1994', label: 'ULTRA RECORDS',   opening: '파도가 발목에 닿을 때마다 어제가 한 번씩 지워졌다.' },
+  { num: '11', title: '책방 골목',         artist: '신소연',   year: '1985', label: 'GHOST SIDE',      opening: '보수동에서 너의 이름이 적힌 책을 발견했다.' },
+  { num: '12', title: '자갈치 밤',         artist: '김도현',   year: '1996', label: 'ULTRA RECORDS',   opening: '자갈치의 불빛은 늘 마지막처럼 보인다.' },
+  { num: '13', title: '해운대 7번 트랙',   artist: '임수정',   year: '1990', label: 'B-SIDE PRESSING', opening: '그 여름의 마지막 노래는 너에게 부치지 못했다.' },
+  { num: '14', title: '밀면 한 그릇',      artist: '하준석',   year: '1987', label: 'GHOST SIDE',      opening: '밀면 한 그릇 앞에서 우리는 자주 침묵했다.' },
+  { num: '15', title: '40계단',            artist: '나은비',   year: '1989', label: 'ULTRA RECORDS',   opening: '40계단을 오르며 마흔 가지 변명을 떠올렸다.' },
+  { num: '16', title: '깡통시장 새벽',     artist: '권태현',   year: '1992', label: 'B-SIDE PRESSING', opening: '새벽의 깡통시장은 너무 환해서 외로웠다.' },
+  { num: '17', title: '영도다리 전화',     artist: '백서윤',   year: '1986', label: 'GHOST SIDE',      opening: '영도다리 위에서 전화기를 꺼냈다 다시 넣었다.' }
+];
+
+let currentIdx = 6; // start at track 07
+let userText = '';
+let userNick = '';
+let currentStep = 1;
+
+// ============================================
+// SCREEN ROUTING
+// ============================================
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function goMain() {
+  showScreen('main');
+  updateLP();
+  // hide print done overlay for next round
+  document.getElementById('printActive').style.display = 'flex';
+  document.getElementById('printActive').style.flexDirection = 'column';
+  document.getElementById('printActive').style.alignItems = 'center';
+  document.getElementById('printDone').classList.remove('show');
+}
+function goMobile() {
+  const t = TRACKS[currentIdx];
+  // populate all mNum spans
+  document.querySelectorAll('.mNum').forEach(el => el.textContent = t.num);
+  document.getElementById('mTitle').textContent = t.title;
+  document.getElementById('mArtist').textContent = t.artist;
+  document.getElementById('mOpening').textContent = `"${t.opening}"`;
+  document.getElementById('mInput').value = userText;
+  document.getElementById('mCount').textContent = userText.length;
+  document.getElementById('mSubmit').disabled = userText.length < 5;
+  // reset to step 1
+  currentStep = 1;
+  mStepUpdate();
+  showScreen('mobile');
+}
+
+// ============================================
+// MOBILE STEP NAVIGATION
+// ============================================
+function mStep(n) {
+  if (n < 1 || n > 4) return;
+  // validation per step
+  if (n === 3 && userNick.length < 2) return; // need nickname
+  if (n === 4 && userText.length < 5) return; // need text
+  currentStep = n;
+  mStepUpdate();
+
+  // step-specific
+  if (n === 3) {
+    setTimeout(() => document.getElementById('mInput').focus(), 100);
+  } else if (n === 2) {
+    setTimeout(() => document.getElementById('mNickInput').focus(), 100);
+  } else if (n === 4) {
+    // populate mini sleeve preview
+    const t = TRACKS[currentIdx];
+    document.getElementById('mTitleMini').textContent = t.title;
+    document.getElementById('mArtistMini').textContent = t.artist;
+    document.getElementById('mNickMini').textContent = userNick || '익명';
+    document.getElementById('mOpeningMini').textContent = `"${t.opening}"`;
+    document.getElementById('mUserMini').textContent = `"${userText}"`;
+    document.getElementById('mSerialMini').textContent =
+      String(237 + Math.floor(Math.random() * 50)).padStart(4, '0');
+  }
+  beep(440 + n * 30, 0.05);
+}
+
+function mStepUpdate() {
+  // show only current step
+  for (let i = 1; i <= 4; i++) {
+    const el = document.getElementById(`mStep${i}`);
+    if (el) el.classList.toggle('active', i === currentStep);
+  }
+  // update dots
+  document.querySelectorAll('.m-step-dot').forEach(dot => {
+    const s = parseInt(dot.dataset.step);
+    dot.classList.toggle('active', s === currentStep);
+    dot.classList.toggle('done', s < currentStep);
+  });
+}
+function goPreview() {
+  const t = TRACKS[currentIdx];
+  const nick = userNick || 'ANONYMOUS';
+  const nickKr = userNick || '익명 작가';
+  const serial = String(237 + Math.floor(Math.random() * 50)).padStart(4, '0');
+  // 자켓 본체
+  document.getElementById('sNum').textContent = t.num;
+  document.getElementById('sTitle').textContent = t.title;
+  document.getElementById('sArtist').textContent = `by ${t.artist} × ${nick}`;
+  document.getElementById('sLabelMeta').textContent = `${t.label} · ${t.year} · ${t.label === 'ULTRA RECORDS' ? 'ULTRA' : t.label === 'B-SIDE PRESSING' ? 'BS' : 'GS'}-${t.num}`;
+  document.getElementById('sOpening').textContent = `"${t.opening}"`;
+  document.getElementById('sUserText').textContent = `"${userText}"`;
+  document.getElementById('sUserCredit').textContent = `— LYRICS BY ${nick} —`;
+  document.getElementById('sSignature').textContent = `— B-side, ${nickKr} —`;
+  document.getElementById('sSerial').textContent = serial;
+  // 다음 인쇄 화면 자켓 미리보기에서도 같은 데이터 쓰도록 저장
+  window.__lastSleeve = { t, nick, nickKr, serial };
+  showScreen('preview');
+}
+function goPrint() {
+  // goPreview에서 저장한 데이터 사용
+  const s = window.__lastSleeve || {};
+  const t = s.t || TRACKS[currentIdx];
+  const nick = s.nick || (userNick || 'ANONYMOUS');
+  const nickKr = s.nickKr || (userNick || '익명 작가');
+  const serial = s.serial || String(237 + Math.floor(Math.random() * 50)).padStart(4, '0');
+  const labelShort = t.label === 'ULTRA RECORDS' ? 'ULTRA'
+                   : t.label === 'B-SIDE PRESSING' ? 'BS'
+                   : 'GS';
+
+  // 좌측 = 작은 일련번호
+  document.getElementById('dNum').textContent = t.num;
+  document.getElementById('dSerial').textContent = serial;
+
+  // 우측 = 인쇄된 자켓 미리보기
+  document.getElementById('pNum').textContent = t.num;
+  document.getElementById('pSerial').textContent = serial;
+  document.getElementById('pTitle').textContent = t.title;
+  document.getElementById('pArtist').textContent = `by ${t.artist} × ${nick}`;
+  document.getElementById('pLabelMeta').textContent = `${t.label} · ${t.year} · ${labelShort}-${t.num}`;
+  document.getElementById('pOpening').textContent = `"${t.opening}"`;
+  document.getElementById('pUserText').textContent = `"${userText}"`;
+  document.getElementById('pUserCredit').textContent = `— LYRICS BY ${nick} —`;
+  document.getElementById('pSignature').textContent = `— B-side, ${nickKr} —`;
+
+  showScreen('printing');
+  document.getElementById('printActive').style.display = 'flex';
+  document.getElementById('printDone').classList.remove('show');
+  setTimeout(() => {
+    document.getElementById('printActive').style.display = 'none';
+    document.getElementById('printDone').classList.add('show');
+  }, 2800);
+}
+
+// ============================================
+// LP UPDATE
+// ============================================
+function updateLP() {
+  const t = TRACKS[currentIdx];
+  document.getElementById('lblNum').textContent = t.num;
+  document.getElementById('lblTitle').textContent = t.title;
+  document.getElementById('coverNum').textContent = t.num;
+  document.getElementById('coverTitle').textContent = t.title;
+  document.getElementById('coverArtist').textContent = t.artist;
+  document.getElementById('coverOpening').textContent = t.opening;
+
+  // Track strip
+  const strip = document.getElementById('trackStrip');
+  strip.innerHTML = TRACKS.map((tr, i) => `
+    <div class="track-item ${i === currentIdx ? 'current' : ''}" data-idx="${i}">
+      <span class="tr-num">${tr.num}</span>
+      <span>${tr.title}</span>
+      <span style="opacity:0.5; margin-left: auto;">— ${tr.artist}</span>
+    </div>
+  `).join('');
+  // scroll current into view
+  const itemW = 220;
+  const offset = currentIdx * itemW - (window.innerWidth / 2) + (itemW / 2);
+  strip.style.transform = `translateX(${-Math.max(0, offset)}px)`;
+
+  document.querySelectorAll('.track-item').forEach(el => {
+    el.addEventListener('click', () => {
+      currentIdx = parseInt(el.dataset.idx);
+      updateLP();
+      flashJog();
+    });
+  });
+}
+
+function flashJog() {
+  const fb = document.getElementById('jogFb');
+  fb.textContent = `▸ TRACK ${TRACKS[currentIdx].num} ◂`;
+  fb.classList.add('flash');
+  setTimeout(() => fb.classList.remove('flash'), 600);
+
+  // brief LP "skip" sound
+  beep(220 + currentIdx * 12, 0.05);
+}
+
+// ============================================
+// SOUND — Web Audio simple beep (LP click feel)
+// ============================================
+let audioCtx = null;
+function beep(freq, dur) {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.value = freq;
+    gain.gain.value = 0.08;
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+    osc.stop(audioCtx.currentTime + dur);
+  } catch(e) {}
+}
+
+// ============================================
+// KEYBOARD
+// ============================================
+document.addEventListener('keydown', (e) => {
+  const active = document.querySelector('.screen.active').id;
+
+  if (active === 'intro') {
+    if (e.key === 'Enter' || e.key === ' ') {
+      goMain();
+      beep(440, 0.1);
+    }
+    return;
+  }
+
+  if (active === 'main') {
+    if (e.key === 'ArrowLeft') {
+      currentIdx = (currentIdx - 1 + TRACKS.length) % TRACKS.length;
+      updateLP();
+      flashJog();
+    } else if (e.key === 'ArrowRight') {
+      currentIdx = (currentIdx + 1) % TRACKS.length;
+      updateLP();
+      flashJog();
+    } else if (e.key.toLowerCase() === 'm' || e.key === 'Enter') {
+      goMobile();
+    }
+    return;
+  }
+
+  if (active === 'mobile') {
+    if (e.key === 'Escape') goMain();
+    return;
+  }
+
+  if (active === 'preview') {
+    if (e.key.toLowerCase() === 'p') goPrint();
+    if (e.key.toLowerCase() === 'm' || e.key === 'Escape') goMobile();
+    return;
+  }
+
+  if (active === 'printing') {
+    if (e.key === ' ' || e.key === 'Enter') {
+      if (document.getElementById('printDone').classList.contains('show')) {
+        goMain();
+      }
+    }
+    return;
+  }
+});
+
+// ============================================
+// MOUSE WHEEL = JOG (on main screen)
+// ============================================
+document.addEventListener('wheel', (e) => {
+  if (document.querySelector('.screen.active').id !== 'main') return;
+  if (e.deltaY > 0) {
+    currentIdx = (currentIdx + 1) % TRACKS.length;
+  } else {
+    currentIdx = (currentIdx - 1 + TRACKS.length) % TRACKS.length;
+  }
+  updateLP();
+  flashJog();
+}, { passive: true });
+
+// ============================================
+// MOBILE INPUT — STEP 2 (nickname)
+// ============================================
+const nickInput = document.getElementById('mNickInput');
+const nickNext = document.getElementById('mNickNext');
+const nickCount = document.getElementById('mNickCount');
+nickInput.addEventListener('input', (e) => {
+  // 한글·영문·숫자·기호 전부 허용 (자유 필명)
+  userNick = e.target.value;
+  nickCount.textContent = userNick.length;
+  nickNext.disabled = userNick.length < 2;
+});
+nickInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && userNick.length >= 2) {
+    e.preventDefault();
+    mStep(3);
+  }
+});
+
+// ============================================
+// MOBILE INPUT — STEP 3 (write)
+// ============================================
+const writeInput = document.getElementById('mInput');
+const writeSubmit = document.getElementById('mSubmit');
+const writeCount = document.getElementById('mCount');
+writeInput.addEventListener('input', (e) => {
+  userText = e.target.value;
+  writeCount.textContent = userText.length;
+  writeSubmit.disabled = userText.length < 5;
+});
+writeInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey && userText.length >= 5) {
+    e.preventDefault();
+    mStep(4);
+  }
+});
+
+// ============================================
+// INIT
+// ============================================
+updateLP();
+</script>
+</body>
+</html>
